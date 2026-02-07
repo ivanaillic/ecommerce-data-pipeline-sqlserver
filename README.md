@@ -70,4 +70,3 @@ ecommerce_data_pipeline_sqlserver/
 - Pipeline orchestration (Airflow)
 - Docker containerization
 
-
