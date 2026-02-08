@@ -65,13 +65,13 @@ def transform(raw_df: pd.DataFrame) -> Dict[str, pd.DataFrame]:
 
     # customers
     df_customers = (
-    df[["CustomerID", "Country", "InvoiceDate"]]
-    .sort_values(["CustomerID", "InvoiceDate"])
-    .groupby("CustomerID", as_index=False)
-    .agg(country=("Country", "last"))
-    .rename(columns={"CustomerID": "customer_id"})
-    .sort_values("customer_id")
-    .reset_index(drop=True)
+        df[["CustomerID", "Country", "InvoiceDate"]]
+        .sort_values(["CustomerID", "InvoiceDate"])
+        .groupby("CustomerID", as_index=False)
+        .agg(country=("Country", "last"))
+        .rename(columns={"CustomerID": "customer_id"})
+        .sort_values("customer_id")
+        .reset_index(drop=True)
     )
 
 

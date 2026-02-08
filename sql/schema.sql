@@ -2,15 +2,6 @@
    Ecommerce Data Pipeline - SQL Server Schema
    ========================================= */
 
--- 1) Create database if it doesn't exist
-IF DB_ID(N'EcommerceDW') IS NULL
-BEGIN
-    CREATE DATABASE EcommerceDW;
-END;
-GO
-
-USE EcommerceDW;
-GO
 
 /* =========================================
    2) Tables (create if not exists)
