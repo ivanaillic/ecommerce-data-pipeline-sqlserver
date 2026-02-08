@@ -54,7 +54,13 @@ def transform(raw_df: pd.DataFrame) -> Dict[str, pd.DataFrame]:
     df = df[~df["InvoiceNo"].str.startswith("C")].copy()
 
     # 4) Remove invalid rows 
+    # Make UnitPrice numeric + round to match SQL DECIMAL(10,2)
+    df["UnitPrice"] = pd.to_numeric(df["UnitPrice"], errors="coerce")
+    df["UnitPrice"] = df["UnitPrice"].round(2)
+
+    # 4) Remove invalid rows AFTER rounding
     df = df[(df["Quantity"] > 0) & (df["UnitPrice"] > 0)].copy()
+
 
     if "Description" in df.columns:
         df["Description"] = df["Description"].astype("string").str.strip()
@@ -77,6 +83,7 @@ def transform(raw_df: pd.DataFrame) -> Dict[str, pd.DataFrame]:
 
     # products
     df_products_tmp = df[["StockCode", "Description", "UnitPrice", "InvoiceDate"]].copy()
+    df_products_tmp = df_products_tmp[df_products_tmp["UnitPrice"] > 0].copy()
     df_products_tmp = df_products_tmp.sort_values(["StockCode", "InvoiceDate"])
 
     df_products = (
